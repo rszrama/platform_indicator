@@ -3,7 +3,12 @@
     attach: function (context, settings) {
 
       var platformEnvironment = Drupal.settings.environment;
-      $('body').prepend('<div id="platform-indicator">' + platformEnvironment + '</div>');
+      if (platformEnvironment == 'master') {
+      	$('body').prepend('<div id="platform-indicator" class="master">' + platformEnvironment + '</div>');	
+      } else {
+      	$('body').prepend('<div id="platform-indicator">' + platformEnvironment + '</div>');	
+      };
+      
 
     }
   }

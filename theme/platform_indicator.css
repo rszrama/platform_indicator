@@ -21,6 +21,9 @@ body #platform-indicator {
   width: 100%;
   z-index: 10000;
 }
+body .master {
+  background-color: red !important;
+}
 @media
 (-webkit-min-device-pixel-ratio: 2),
 (min-resolution: 192dpi) {

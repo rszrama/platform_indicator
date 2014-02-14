@@ -7,11 +7,11 @@ function platform_indicator_page_build(&$page) {
   // Extract the platform environment name.
   global $base_url;
   $platform_url = parse_url($base_url); 
-  $platform_host = explode(".", $data['host']);
-  $platform_environment = $platform_host[0];
+  $platform_host = explode(".", $platform_url['host']);
+  $platform_environment = explode("-", $platform_host[0]); // If we are on a child branch of master.
 
   // Inject the required resources.
-  drupal_add_js(array('environment' => $platform_environment), 'setting');
+  drupal_add_js(array('environment' => $platform_environment[0]), 'setting');
   drupal_add_js(drupal_get_path('module', 'platform_indicator') . '/js/platform_indicator.js');
   drupal_add_css(drupal_get_path('module', 'platform_indicator') . '/theme/platform_indicator.css');
 }
