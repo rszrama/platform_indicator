@@ -1,0 +1,11 @@
+<?php
+
+function platform_indicator_page_build(&$page) {
+  $platform_environment = 'ENVIRONMENT VARIABLE';
+  drupal_add_js(array('environment' => $platform_environment), 'setting');
+  drupal_add_js(drupal_get_path('module', 'platform_indicator') . '/js/platform_indicator.js');
+  drupal_add_css(drupal_get_path('module', 'platform_indicator') . '/theme/platform_indicator.css');
+}
+function platform_indicator_preprocess_html(&$vars) {
+  $vars['classes_array'][] = 'platform-indicator';
+}
