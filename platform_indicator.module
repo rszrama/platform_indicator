@@ -23,7 +23,7 @@ function platform_indicator_page_build(&$page) {
   if (!empty($platform_environment) && $platform_environment != 'master') {
     // Include the environment name in the JavaScript settings array and attach
     // the indicator JavaScript and CSS to the page.
-    drupal_add_js(array('environment' => $platform_environment), 'setting');
+    drupal_add_js(array('environment' => check_plain($platform_environment)), 'setting');
     drupal_add_js(drupal_get_path('module', 'platform_indicator') . '/js/platform_indicator.js');
     drupal_add_css(drupal_get_path('module', 'platform_indicator') . '/theme/platform_indicator.css');
   }
