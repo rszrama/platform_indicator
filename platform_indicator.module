@@ -1,24 +1,45 @@
 <?php
 
 /**
+ * @file
+ * Indicates which environment of Platform you are viewing.
+ *
+ * We do this by adding a div that is fixed to the bottom of the page. We can
+ * read environment variables configured in Platform to find the environment
+ * name and then save the value to Drupal's JavaScript settings array for
+ * display on the site.
+ */
+
+
+/**
  * Implements hook_page_build().
  */
 function platform_indicator_page_build(&$page) {
-  // Extract the platform environment name.
-  global $base_url;
-  $platform_url = parse_url($base_url); 
-  $platform_host = explode(".", $platform_url['host']);
-  $platform_environment = explode("-", $platform_host[0]); // If we are on a child branch of master.
+  // Fetch the name of the current Platform environment.
+  $platform_environment = platform_indicator_get_environment();
 
-  // Inject the required resources.
-  drupal_add_js(array('environment' => $platform_environment[0]), 'setting');
-  drupal_add_js(drupal_get_path('module', 'platform_indicator') . '/js/platform_indicator.js');
-  drupal_add_css(drupal_get_path('module', 'platform_indicator') . '/theme/platform_indicator.css');
+  // Check to ensure we got a value and that it is not master, as we don't want
+  // to show the indicator on non-Platform sites or in the master environment.
+  if (!empty($platform_environment) && $platform_environment != 'master') {
+    // Include the environment name in the JavaScript settings array and attach
+    // the indicator JavaScript and CSS to the page.
+    drupal_add_js(array('environment' => $platform_environment), 'setting');
+    drupal_add_js(drupal_get_path('module', 'platform_indicator') . '/js/platform_indicator.js');
+    drupal_add_css(drupal_get_path('module', 'platform_indicator') . '/theme/platform_indicator.css');
+  }
 }
 
 /**
  * Implements hook_preprocess_html().
  */
 function platform_indicator_preprocess_html(&$vars) {
+  // Add the platform-indicator class to the body tag.
   $vars['classes_array'][] = 'platform-indicator';
+}
+
+/**
+ * Returns the name of the current Platform environment.
+ */
+function platform_indicator_get_environment() {
+  return getenv('PLATFORM_ENVIRONMENT');
 }

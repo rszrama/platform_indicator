@@ -1,7 +1,7 @@
-body,
 body.platform-indicator {
   margin-bottom: 30px;
 }
+
 body #platform-indicator {
   background: #201f1f url("platform-logo.png") no-repeat 5px 5px;
   border-top: 1px solid #2c2b2b;
@@ -21,9 +21,7 @@ body #platform-indicator {
   width: 100%;
   z-index: 10000;
 }
-body .master {
-  background-color: red !important;
-}
+
 @media
 (-webkit-min-device-pixel-ratio: 2),
 (min-resolution: 192dpi) {
